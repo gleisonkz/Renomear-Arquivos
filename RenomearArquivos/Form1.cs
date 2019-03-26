@@ -26,10 +26,11 @@ namespace RenomearArquivos
             for (int i = 0; i < arquivos.Length; i++)
             {
                 var files = new FileInfo(arquivos[i]);
-                files.CopyTo(Path.Combine(dirsaida, files.Name.Replace("QUERO", "").Trim()));
-
+                if (files.Name.Contains("QUERO"))
+                {
+                    files.CopyTo(Path.Combine(dirsaida, files.Name.Replace("QUERO", "").Trim()), true);
+                }
             }
-
             MessageBox.Show("Movimentação e rename concluído");
         }
     }
