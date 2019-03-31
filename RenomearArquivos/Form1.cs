@@ -20,18 +20,33 @@ namespace RenomearArquivos
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string[] arquivos = Directory.GetFiles(@"C:\Users\Gleison\Downloads\TESTE RENAME");
+            string[] arquivos = Directory.GetFiles(@"C:\Users\Gleison\Downloads\TESTE RENAME","*.ret");
             string dirsaida = @"C:\Users\Gleison\Downloads\TESTE RENAME";
-
-            for (int i = 0; i < arquivos.Length; i++)
+            int cont = 0;
+            foreach (var item in arquivos)
             {
-                var files = new FileInfo(arquivos[i]);
-                if (files.Name.Contains("QUERO"))
+                
+                var ArquivoInfo = new FileInfo(item);
+                if (ArquivoInfo.Name.Contains("QUERO"))
                 {
-                    files.CopyTo(Path.Combine(dirsaida, files.Name.Replace("QUERO", "").Trim()), true);
+                    ArquivoInfo.MoveTo(Path.Combine(dirsaida, ArquivoInfo.Name.Replace("QUERO", "").Trim()));
                 }
+                else
+                {
+                    cont++;
+                }
+
             }
-            MessageBox.Show("Movimentação e rename concluído");
+
+            if (cont == 0)
+            {
+                MessageBox.Show("Arquivos Renomeados");
+            }
+            else
+            {
+                MessageBox.Show("Não existem arquivos a serem renomeados");
+            }
+            
         }
     }
 }
